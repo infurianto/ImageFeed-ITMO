@@ -10,14 +10,14 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    private var avatarImage: UIImageView = {
+    private let avatarImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "avatar")
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
-    private var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Екатерина Новикова"
         label.textColor = .ypWhite
@@ -26,7 +26,7 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private var loginNameLabel: UILabel = {
+    private let loginNameLabel: UILabel = {
         let label = UILabel()
         label.text = "@ekaterina_nov"
         label.textColor = .ypGray
@@ -35,7 +35,7 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private var descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Hello, World!"
         label.textColor = .ypWhite
@@ -44,9 +44,9 @@ final class ProfileViewController: UIViewController {
         return label
     }()
     
-    private var logoutButton: UIButton = {
+    private let logoutButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "logout_icon"), for: .normal)
+        button.setImage(UIImage(named: "logout_button"), for: .normal)
         button.tintColor = .ypRed
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
