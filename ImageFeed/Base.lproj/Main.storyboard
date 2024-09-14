@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -213,7 +212,7 @@
         <!--Auth View Controller-->
         <scene sceneID="0Lr-3g-Qe3">
             <objects>
-                <viewController id="tmQ-d3-IXF" customClass="AuthViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="tmQ-d3-IXF" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VLH-Qn-bgs">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -265,13 +264,13 @@
         <!--Web View View Controller-->
         <scene sceneID="UjQ-6a-mVn">
             <objects>
-                <viewController id="UMo-au-vr1" customClass="WebViewViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UMo-au-vr1" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Sb-dJ-us1">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rwW-j4-Si5">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="40" width="393" height="812"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -296,14 +295,14 @@
                             </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ixM-oO-2XY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="YP White"/>
                         <constraints>
                             <constraint firstItem="rwW-j4-Si5" firstAttribute="leading" secondItem="5Sb-dJ-us1" secondAttribute="leading" id="9i5-04-mbx"/>
+                            <constraint firstItem="rwW-j4-Si5" firstAttribute="top" secondItem="sSt-1C-AdR" secondAttribute="top" id="GgT-c5-agN"/>
                             <constraint firstItem="sSt-1C-AdR" firstAttribute="leading" secondItem="ixM-oO-2XY" secondAttribute="leading" id="Ldq-1m-cE1"/>
                             <constraint firstItem="sSt-1C-AdR" firstAttribute="top" secondItem="ixM-oO-2XY" secondAttribute="top" constant="40" id="NNc-Zq-OXA"/>
                             <constraint firstAttribute="bottom" secondItem="rwW-j4-Si5" secondAttribute="bottom" id="Olx-5r-pa6"/>
                             <constraint firstAttribute="trailing" secondItem="rwW-j4-Si5" secondAttribute="trailing" id="Rzf-rt-2qN"/>
-                            <constraint firstItem="rwW-j4-Si5" firstAttribute="top" secondItem="5Sb-dJ-us1" secondAttribute="top" id="TLN-gt-dCQ"/>
                             <constraint firstItem="Hvb-2r-0Uj" firstAttribute="leading" secondItem="ixM-oO-2XY" secondAttribute="leading" id="Vlm-R0-RZV"/>
                             <constraint firstItem="Hvb-2r-0Uj" firstAttribute="top" secondItem="ixM-oO-2XY" secondAttribute="top" id="nE8-VP-XsO"/>
                             <constraint firstItem="sSt-1C-AdR" firstAttribute="trailing" secondItem="ixM-oO-2XY" secondAttribute="trailing" id="xnA-DB-ha4"/>
@@ -317,7 +316,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hAO-cB-6a6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="748" y="-456"/>
+            <point key="canvasLocation" x="747.32824427480909" y="-456.33802816901408"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xZk-lE-SzO">
@@ -340,7 +339,7 @@
         <!--Unsplash-->
         <scene sceneID="J3m-hF-UHz">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" id="IbO-ap-1ja" customClass="SplashViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashViewController" id="IbO-ap-1ja" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Iwe-Bm-zEI">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -379,8 +378,8 @@
         <namedColor name="YP Black">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="YP White">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

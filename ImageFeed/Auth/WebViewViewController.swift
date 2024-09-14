@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 import WebKit
 
-fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-
 protocol WebViewViewControllerDelegate: AnyObject {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
     func webViewViewControllerDidCancel(_ vc: WebViewViewController)
@@ -26,23 +24,7 @@ final class WebViewViewController: UIViewController {
         super.viewDidLoad()
 
         webView.navigationDelegate = self
-
-        guard var urlComponents = URLComponents(string: UnsplashAuthorizeURLString) else {
-            print("Invalid urlComponents from \(UnsplashAuthorizeURLString)")
-            return
-        }
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: Constants.accessScope)
-        ]
-        guard let url = urlComponents.url else { return }
-
-        let request = URLRequest(url: url)
-        webView.load(request)
-
-        updateProgress()
+        setupWebview()
     }
 
     @IBAction private func didTapBackButton(_ sender: Any?) {
@@ -75,6 +57,25 @@ final class WebViewViewController: UIViewController {
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
+    }
+    
+    private func setupWebview() {
+        guard var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString) else {
+            print("Invalid urlComponents from \(Constants.unsplashAuthorizeURLString)")
+            return
+        }
+        urlComponents.queryItems = [
+            URLQueryItem(name: "client_id", value: Constants.accessKey),
+            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: Constants.accessScope)
+        ]
+        guard let url = urlComponents.url else { return }
+
+        let request = URLRequest(url: url)
+        webView.load(request)
+
+        updateProgress()
     }
 }
 

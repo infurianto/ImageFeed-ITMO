@@ -56,7 +56,13 @@ extension OAuth2Service {
         let decoder = JSONDecoder()
         return urlSession.data(for: request) { (result: Result<Data, Error>) in
             let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
-                Result { try decoder.decode(OAuthTokenResponseBody.self, from: data) }
+                do {
+                    let decodedObject = try decoder.decode(OAuthTokenResponseBody.self, from: data)
+                    return .success(decodedObject)
+                } catch {
+                    print("ERROR: decoding error - ", error)
+                    return .failure(error)
+                }
             }
             completion(response)
         }
@@ -114,11 +120,14 @@ extension URLSession {
                 if 200 ..< 300 ~= statusCode {
                     fulfillCompletion(.success(data))
                 } else {
+                    print("ERROR: request code - ", statusCode)
                     fulfillCompletion(.failure(NetworkError .httpStatusCode(statusCode)))
                 }
             } else if let error = error {
+                print("ERROR: url request error - ", error)
                 fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
             } else {
+                print("ERROR: url session error")
                 fulfillCompletion(.failure(NetworkError.urlSessionError))
             }
         })
