@@ -12,7 +12,7 @@
         <!--ImageList-->
         <scene sceneID="pRP-KM-HAr">
             <objects>
-                <viewController title="ImageList" id="ydi-QX-Igh" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagesListViewController" title="ImageList" id="ydi-QX-Igh" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BSw-3O-fDk">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -212,7 +212,7 @@
         <!--Auth View Controller-->
         <scene sceneID="0Lr-3g-Qe3">
             <objects>
-                <viewController id="tmQ-d3-IXF" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthViewController" id="tmQ-d3-IXF" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VLH-Qn-bgs">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -321,7 +321,7 @@
         <!--Navigation Controller-->
         <scene sceneID="xZk-lE-SzO">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wll-3O-yqw" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationViewController" automaticallyAdjustsScrollViewInsets="NO" id="wll-3O-yqw" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JWg-Ft-Ptj">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>

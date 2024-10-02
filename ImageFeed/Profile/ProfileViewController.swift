@@ -7,12 +7,13 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
     private let avatarImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "avatar")
+        image.image = UIImage(named: "placeholder")
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -52,6 +53,10 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,12 +65,31 @@ final class ProfileViewController: UIViewController {
         setLoginName()
         setDescription()
         setLogoutButton()
+        updateProfile(profileService.profile)
     }
 }
     
 extension ProfileViewController {
+    private func updateProfile(_ profile: Profile?) {
+           guard let profile = profile else { return }
+           nameLabel.text = profile.name
+           loginNameLabel.text = profile.loginName
+           descriptionLabel.text = profile.bio
+
+           profileImageServiceObserver = NotificationCenter.default.addObserver(
+               forName: ProfileImageService.didChangeNotification,
+               object: nil,
+               queue: .main
+           ) { [weak self] _ in
+               guard let self = self else { return }
+               self.updateAvatar()
+           }
+           updateAvatar()
+       }
+    
     private func setImageView() {
         view.addSubview(avatarImage)
+        avatarImage.layer.cornerRadius = 35
         NSLayoutConstraint.activate([
             avatarImage.widthAnchor.constraint(equalToConstant: 70),
             avatarImage.heightAnchor.constraint(equalToConstant: 70),
@@ -100,14 +124,47 @@ extension ProfileViewController {
             descriptionLabel.trailingAnchor.constraint(equalTo: loginNameLabel.trailingAnchor)
         ])
     }
-
+    
+    @objc private func didTapLogoutButton() {
+        // TODO: будет сделано в следующем спринте
+        // OAuth2TokenStorage.shared.token = nil
+    }
+    
     private func setLogoutButton() {
         view.addSubview(logoutButton)
+        logoutButton.addTarget(self, action: #selector(didTapLogoutButton), for: .touchUpInside)
+
         NSLayoutConstraint.activate([
             logoutButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -26),
             logoutButton.leadingAnchor.constraint(greaterThanOrEqualTo: avatarImage.trailingAnchor),
             logoutButton.centerYAnchor.constraint(equalTo: avatarImage.centerYAnchor)
         ])
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = profileImageService.avatarUrl,
+            let url = URL(string: profileImageURL) else { return }
+
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+
+        let processor = RoundCornerImageProcessor(cornerRadius: 60)
+        avatarImage.kf.indicatorType = .activity
+        avatarImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "placeholder"),
+            options: [.processor(processor)]
+        ) {
+            result in
+            switch result {
+            case .success(let value):
+                print(value.image)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

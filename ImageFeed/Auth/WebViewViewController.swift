@@ -17,6 +17,9 @@ protocol WebViewViewControllerDelegate: AnyObject {
 final class WebViewViewController: UIViewController {
     @IBOutlet private var webView: WKWebView!
     @IBOutlet private var progressView: UIProgressView!
+    
+    private var estimatedProgressObservation: NSKeyValueObservation?
+    private var alertPresenter: AlertPresenterProtocol?
 
     weak var delegate: WebViewViewControllerDelegate?
 
@@ -60,6 +63,14 @@ final class WebViewViewController: UIViewController {
     }
     
     private func setupWebview() {
+        estimatedProgressObservation = webView.observe(
+            \.estimatedProgress,
+             options: [],
+             changeHandler: { [weak self] _, _ in
+                 self?.updateProgress()
+             }
+        )
+        
         guard var urlComponents = URLComponents(string: Constants.unsplashAuthorizeURLString) else {
             print("Invalid urlComponents from \(Constants.unsplashAuthorizeURLString)")
             return
@@ -92,6 +103,14 @@ extension WebViewViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
+    
+    func webView(
+        _ webView: WKWebView,
+        didFailProvisionalNavigation navigation: WKNavigation!,
+        withError error: Error
+    ) {
+        showNetworkError()
+    }
 
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if
@@ -105,5 +124,20 @@ extension WebViewViewController: WKNavigationDelegate {
         } else {
             return nil
         }
+    }
+}
+
+extension WebViewViewController {
+    private func showNetworkError() {
+        let alert = AlertModel(
+            title: "Что-то пошло не так(",
+            message: "Не удалось войти в систему",
+            buttonText: "Ок"
+            ) { [weak self] in
+                guard let self else { return }
+                dismiss(animated: true)
+            }
+        alertPresenter = AlertPresenter(delegate: self)
+        alertPresenter?.showError(for: alert)
     }
 }
